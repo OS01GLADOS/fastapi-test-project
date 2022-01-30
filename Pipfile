@@ -1,0 +1,22 @@
+[[source]]
+url = "https://pypi.org/simple"
+verify_ssl = true
+name = "pypi"
+
+[packages]
+fastapi = "*"
+uvicorn = "*"
+sqlalchemy = "*"
+passlib = "*"
+python-jose = "*"
+python-multipart = "*"
+
+[dev-packages]
+autopep8 = "*"
+
+[requires]
+python_version = "3.8"
+
+[scripts]
+runserver = "uvicorn blog.main:app --reload"
+run_doc = "python3 main.py"
