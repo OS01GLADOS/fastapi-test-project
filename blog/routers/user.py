@@ -14,12 +14,12 @@ router = APIRouter(
 @router.post('/',
              status_code=status.HTTP_201_CREATED,
              response_model=ShowUser)
-def create_user(request: User, db: Session = Depends(get_db)):
+async def create_user(request: User, db: Session = Depends(get_db)):
     return user_repo.create(request, db)
 
 
 @router.get('/{id}', response_model=ShowUser)
-def get_user(id: int, db: Session = Depends(get_db)):
+async def get_user(id: int, db: Session = Depends(get_db)):
     user = user_repo.get(id, db)
     if not user:
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND,

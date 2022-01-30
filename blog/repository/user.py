@@ -5,13 +5,13 @@ from blog.hashing import Hash
 from blog.schemas import User
 
 
-def get(id: int, db: Session):
+async def get(id: int, db: Session):
     user = db.query(models.User).get(id)
     if not user:
         return None
     return user
 
-def create(request: User,db: Session):
+async def create(request: User,db: Session):
     hashed_password = Hash.bcrypt(request.password)
     new_user = models.User(
         name=request.name,
