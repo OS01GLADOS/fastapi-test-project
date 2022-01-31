@@ -1,7 +1,4 @@
-import re
-from sqlalchemy.orm import contains_eager
-
-from sqlalchemy import insert, select, subquery
+from sqlalchemy import insert, select
 from sqlalchemy.ext.asyncio import AsyncSession
 from blog import models
 from blog.hashing import Hash
@@ -25,12 +22,7 @@ async def get(id: int, session: AsyncSession):
 
 async def create(request: User, session: AsyncSession):
     hashed_password = Hash.bcrypt(request.password)
-    new_user = models.User(
-        name=request.name,
-        email=request.email,
-        password=hashed_password
-    )
-    session.execute(insert(models.User).values(
+    await session.execute(insert(models.User).values(
         name=request.name,
         email=request.email,
         password=hashed_password))
