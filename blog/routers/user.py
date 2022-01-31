@@ -14,10 +14,11 @@ router = APIRouter(
 
 @router.post('/',
              status_code=status.HTTP_201_CREATED,
-             # response_model=ShowUser
+             response_model=ShowUser
              )
-async def create_user(request: User, db: Session = Depends(get_db)):
-    return await user_repo.create(request, db)
+async def create_user(request: User):
+    async with engine.connect() as conn:
+        return await user_repo.create(request, conn)
 
 
 @router.get('/{id}', 
@@ -26,7 +27,6 @@ response_model=ShowUser
 async def get_user(id: int):
     async with engine.connect() as conn:
         user = await user_repo.get(id, conn)
-        print (user)
         if not user:
             raise HTTPException(status_code=status.HTTP_404_NOT_FOUND,
                                 detail=f'User with id {id} is not available')
