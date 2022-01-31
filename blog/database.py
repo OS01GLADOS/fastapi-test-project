@@ -25,7 +25,7 @@ SessionLocal = sessionmaker(
 
 
 async def get_db():
-    db = SessionLocal()
+    db = await SessionLocal()
     try:
         yield db
     finally:

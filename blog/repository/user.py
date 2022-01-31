@@ -2,15 +2,17 @@ from sqlalchemy.orm import Session
 
 from sqlalchemy import select
 from sqlalchemy.ext.asyncio import AsyncSession
-
+from sqlalchemy.orm import selectinload
 from blog import models
 from blog.hashing import Hash
 from blog.schemas import User
 
 
 async def get(id: int, session: AsyncSession):
-    query_res = await session.execute(select(models.User).where(models.User.id == id))
+    #!!! here
+    query_res = await session.execute(select(models.User).options(selectinload(models.User.blogs)).where(models.User.id == id))
     res = query_res.fetchone()
+    print(res)
     if not res:
         return None
     return res

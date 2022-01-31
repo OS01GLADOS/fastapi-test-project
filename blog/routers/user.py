@@ -21,7 +21,7 @@ async def create_user(request: User, db: Session = Depends(get_db)):
 
 
 @router.get('/{id}', 
-# response_model=ShowUser
+response_model=ShowUser
 )
 async def get_user(id: int):
     async with engine.connect() as conn:
