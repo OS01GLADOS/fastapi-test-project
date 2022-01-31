@@ -6,10 +6,10 @@ name = "pypi"
 [packages]
 fastapi = "*"
 uvicorn = "*"
-sqlalchemy = "*"
 passlib = "*"
 python-jose = "*"
 python-multipart = "*"
+sqlalchemy = {extras = ["asyncio"], version = "*"}
 
 [dev-packages]
 autopep8 = "*"

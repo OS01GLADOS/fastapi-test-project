@@ -14,28 +14,28 @@ router = APIRouter(
 
 
 @router.get('/', response_model=List[ShowBlog])
-async def all(db: Session = Depends(get_db),
+def all(db: Session = Depends(get_db),
         get_current_user: User = Depends(get_current_user)):
-    return await blog_repo.get_all(db)
+    return blog_repo.get_all(db)
 
 
 @router.post('/', status_code=status.HTTP_201_CREATED)
-async def create(request: Blog,
+def create(request: Blog,
            db: Session = Depends(get_db),
            get_current_user: User = Depends(get_current_user)
            ):
     user_mail = get_current_user.email
-    return await blog_repo.create(user_mail, request, db)
+    return blog_repo.create(user_mail, request, db)
 
 
 @router.get('/{id}',
             status_code=status.HTTP_200_OK,
             response_model=ShowBlog,
             )
-async def show(id: int,
+def show(id: int,
          db: Session = Depends(get_db),
          get_current_user: User = Depends(get_current_user)):
-    blog = await blog_repo.get(id, db)
+    blog = blog_repo.get(id, db)
     if not blog:
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND,
                             detail=f'Blog with the id {id} is not available')
@@ -43,11 +43,11 @@ async def show(id: int,
 
 
 @router.put('/{id}', status_code=status.HTTP_202_ACCEPTED)
-async def update(id: int,
+def update(id: int,
            request: Blog, db: Session = Depends(get_db),
            get_current_user: User = Depends(get_current_user)):
     user_mail = get_current_user.email
-    blog = await blog_repo.update(user_mail, id, request, db)
+    blog = blog_repo.update(user_mail, id, request, db)
     if not blog:
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND,
                             detail=f'Blog with the id {id} is not available')
@@ -57,11 +57,11 @@ async def update(id: int,
 @router.delete('/{id}',
                status_code=status.HTTP_204_NO_CONTENT,
                )
-async def destroy(id: int,
+def destroy(id: int,
             db: Session = Depends(get_db),
             get_current_user: User = Depends(get_current_user)):
     user_mail = get_current_user.email
-    res = await blog_repo.delete(id, db)
+    res = blog_repo.delete(id, db)
     if not res:
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND,
                             detail=f'Blog with the id {id} is not available')

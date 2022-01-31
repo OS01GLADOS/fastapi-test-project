@@ -1,7 +1,7 @@
 {
     "_meta": {
         "hash": {
-            "sha256": "2ea72bab25a6ea94d154ec81666cf7414137cd33f3d52b8fe423882820d9357e"
+            "sha256": "7367770974c539e5355850a9e847e5c145f3a866b9ca10a858d4fb63851c3524"
         },
         "pipfile-spec": 6,
         "requires": {
@@ -240,6 +240,9 @@
             "version": "==1.2.0"
         },
         "sqlalchemy": {
+            "extras": [
+                "asyncio"
+            ],
             "hashes": [
                 "sha256:05fa14f279d43df68964ad066f653193187909950aa0163320b728edfc400167",
                 "sha256:0ddc5e5ccc0160e7ad190e5c61eb57560f38559e22586955f205e537cda26034",

@@ -5,19 +5,19 @@ from blog import models
 from blog.schemas import Blog, User
 
 
-async def get(id: int, db: Session):
+def get(id: int, db: Session):
     blog = db.query(models.Blog).get(id)
     if not blog:
         return None
     return blog
 
 
-async def get_all(db: Session):
+def get_all(db: Session):
     blogs = db.query(models.Blog).all()
     return blogs
 
 
-async def create(user_mail: str, request: Blog, db: Session):
+def create(user_mail: str, request: Blog, db: Session):
     blog_user = db.query(models.User).filter(models.User.email
                                              == user_mail).first()
     new_blog = models.Blog(
@@ -31,7 +31,7 @@ async def create(user_mail: str, request: Blog, db: Session):
     return new_blog
 
 
-async def update(user_mail: str, id: int, request: Blog, db: Session):
+def update(user_mail: str, id: int, request: Blog, db: Session):
     blog_user = db.query(models.User).filter(models.User.email
                                              == user_mail).first()
     blog = db.query(models.Blog).filter(models.Blog.id == id,
@@ -43,7 +43,7 @@ async def update(user_mail: str, id: int, request: Blog, db: Session):
     return True
 
 
-async def delete(user_mail: str, id: int, db: Session):
+def delete(user_mail: str, id: int, db: Session):
     blog_user = db.query(models.User).filter(models.User.email
                                              == user_mail).first()
     blog = db.query(models.Blog).filter(models.Blog.id == id,
