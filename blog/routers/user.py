@@ -1,6 +1,4 @@
-import asyncio
-from fastapi import APIRouter, Depends, HTTPException, status
-from sqlalchemy.orm import Session
+from fastapi import APIRouter, HTTPException, status
 
 from blog.database import engine, get_db
 from blog.repository import user as user_repo
