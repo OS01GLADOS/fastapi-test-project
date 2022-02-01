@@ -3,8 +3,6 @@ from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy.orm import sessionmaker
 from sqlalchemy.orm import declarative_base
 
-SQLACHEMY_DATABASE_URL = 'sqlite:///./blog.db'
-
 DB_HOST_SERVER = 'localhost'
 DB_SERVER_PORT = '5432'
 DB_DATABASE_NAME = 'postgres'
