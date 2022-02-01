@@ -44,26 +44,27 @@ async def show(id: int,
 
 
 @router.put('/{id}', status_code=status.HTTP_202_ACCEPTED)
-def update(id: int,
-           request: Blog, db: Session = Depends(get_db),
+async def update(id: int,
+           request: Blog,
            get_current_user: User = Depends(get_current_user)):
-    user_mail = get_current_user.email
-    blog = blog_repo.update(user_mail, id, request, db)
-    if not blog:
-        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND,
-                            detail=f'Blog with the id {id} is not available')
-    return 'updated'
+    async with engine.connect() as conn:
+        user_mail = get_current_user.email
+        blog = await blog_repo.update(user_mail, id, request, conn)
+        if not blog:
+            raise HTTPException(status_code=status.HTTP_404_NOT_FOUND,
+                                detail=f'Blog with the id {id} is not available')
+        return 'updated'
 
 
 @router.delete('/{id}',
                status_code=status.HTTP_204_NO_CONTENT,
                )
-def destroy(id: int,
-            db: Session = Depends(get_db),
+async def destroy(id: int,
             get_current_user: User = Depends(get_current_user)):
-    user_mail = get_current_user.email
-    res = blog_repo.delete(id, db)
-    if not res:
-        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND,
-                            detail=f'Blog with the id {id} is not available')
-    return Response(status_code=status.HTTP_204_NO_CONTENT)
+    async with engine.connect() as conn:
+        user_mail = get_current_user.email
+        res = blog_repo.delete(user_mail, id, conn)
+        if not res:
+            raise HTTPException(status_code=status.HTTP_404_NOT_FOUND,
+                                detail=f'Blog with the id {id} is not available')
+        return Response(status_code=status.HTTP_204_NO_CONTENT)

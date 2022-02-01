@@ -4,12 +4,13 @@ verify_ssl = true
 name = "pypi"
 
 [packages]
-fastapi = "*"
 uvicorn = "*"
 passlib = "*"
 python-jose = "*"
 python-multipart = "*"
 sqlalchemy = {extras = ["asyncio"], version = "*"}
+asyncpg = "*"
+fastapi = "*"
 
 [dev-packages]
 autopep8 = "*"
