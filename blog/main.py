@@ -20,3 +20,8 @@ async def startup():
 @app.on_event('shutdown')
 async def shutdown():
     await engine.dispose()
+
+
+@app.get('/ping')
+def ping():
+    return 'pong'
