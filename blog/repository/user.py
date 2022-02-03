@@ -6,14 +6,15 @@ from blog.schemas import User
 
 
 async def get(id: int, session: AsyncSession):
-    query_res = await session.execute(select(models.User)
-                                      .where(models.User.id == id))
+    query_res = await session.execute(
+        select(models.User).where(models.User.id == id)
+    )
     res = query_res.first()
     if not res:
         return None
-    query_res = await session.execute(select(models.Blog)
-                                      .where(models.Blog.user_id
-                                             == id))
+    query_res = await session.execute(
+        select(models.Blog).where(models.Blog.user_id == id)
+    )
     blogs = query_res.all()
     res = dict(res)
     res['blogs'] = blogs
@@ -22,14 +23,15 @@ async def get(id: int, session: AsyncSession):
 
 async def create(request: User, session: AsyncSession):
     hashed_password = Hash.bcrypt(request.password)
-    await session.execute(insert(models.User).values(
-        name=request.name,
-        email=request.email,
-        password=hashed_password))
+    await session.execute(
+        insert(models.User).values(
+            name=request.name, email=request.email, password=hashed_password
+        )
+    )
     await session.commit()
-    query_res = await session.execute(select(models.User)
-                                      .where(models.User.email
-                                             == request.email))
+    query_res = await session.execute(
+        select(models.User).where(models.User.email == request.email)
+    )
     new_user = query_res.first()
     new_user = dict(new_user)
     new_user['blogs'] = []

@@ -21,3 +21,6 @@ python_version = "3.8"
 [scripts]
 runserver = "uvicorn blog.main:app --reload"
 run_doc = "python3 main.py"
+
+[pipenv]
+allow_prereleases = true

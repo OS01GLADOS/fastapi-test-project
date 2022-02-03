@@ -13,9 +13,7 @@ POSTGRES_DB_URL = f'postgresql+asyncpg://{DB_USERNAME}:{DB_PASSWORD}@{DB_HOST_SE
 
 Base = declarative_base()
 
-engine = create_async_engine(POSTGRES_DB_URL,
-                             echo=True
-                             )
+engine = create_async_engine(POSTGRES_DB_URL, echo=True)
 
 SessionLocal = sessionmaker(
     engine, expire_on_commit=False, class_=AsyncSession

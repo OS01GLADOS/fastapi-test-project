@@ -11,6 +11,7 @@ app.include_router(authentication.router)
 app.include_router(blog.router)
 app.include_router(user.router)
 
+
 @app.on_event('startup')
 async def startup():
     async with engine.begin() as conn:
@@ -20,8 +21,3 @@ async def startup():
 @app.on_event('shutdown')
 async def shutdown():
     await engine.dispose()
-
-
-@app.get('/ping')
-def ping():
-    return 'pong'
